@@ -1,0 +1,343 @@
+1. Wanted to See the Full name
+ -- Full Name Column (Column on Customer Table)
+Full Name = 'Customer'[First Name] & " " & 'Customer'[Last Name]
+
+2. -- Age Breakdown Calculation (Column on Customer Table)
+Age Breakdown = 
+IF('Customer'[Age] >= 55, "55+",
+IF('Customer'[Age] >= 45, "45-54",
+IF('Customer'[Age] >= 35, "35-44",
+"18-34" ) ) )
+
+3. Create Month Year 
+-- Month Year
+Month Year = FORMAT('Date'[Date], "mm-yyyy")   //    MM --01  MMM -- JAN    MMMM -- JANUARY" 
+
+4. we do wanted to see how much the internet sales effects based on the temp 
+
+we do have key(region+month) Temperature table, but we dont have the key in the region Internet sales, so we bring the region column from sales table using navigation function and create the Temp key
+
+Temperature Key = 
+RELATED('Sales Territory'[Sales Territory Region]) & RELATED('Date'[Month Number Of Year])
+
+// we can take month from Order Date but its in active relationship now but when we make active relationship to ShipDate it varies. 
+// To make more dynamic we are gonna use the Related from the date table.
+
+
+5. We wanted to see the Total Transactions based on the Each Region level
+-- Total Transactions (Column on Sales Territory table)
+
+
+Total Transactions = COUNTROWS('Internet Sales')                 // It doesnt work. 
+COUNTROWS(                             //use Aggregate Function 
+    RELATEDTABLE('Internet Sales'))
+
+//# Its giving 60398 for all row context not working put as active relationship getting deactivated. So we use the Navigation functions. 
+// We use related or relatedtable based on the one side relation or one to many or many to many
+// Here Sales Territory Key is unique key  
+// one to many relationship between the Sales Territory Key(dim table) and key in the Internet sales Table (Fact Table)
+// so if you want to get the data from the many side of the relationship Table so we use the RELATEDTABLE.
+// So RELATEDTABLE returns all of the rows and columns based on the sales territiory key 
+
+6. We wanted to see the Total Sales based on the High Volume and low volume region
+
+Region Volume = 
+SWITCH(TRUE(),
+    [Total Transactions] >= 7000, "High Volume",
+    [Total Transactions] >= 4000, "Medium Volume",
+    [Total Transactions] >= 1, "Low Volume",
+    "N/A" ) 
+
+// Instead of Nested If, i am going to use the switch statement like the CASE statement in SQL
+
+
+7. Wanted to see the Last order date for each Customer 
+***Optional
+-- Last Order Date (Column on Customer Table)
+Last Order Date = MAXX(RELATEDTABLE('Internet Sales'), 'Internet Sales'[Order Date])
+
+Last Purchase Date = 
+//MAX('Internet Sales'[Order Date])  // filter Isnt taking place as results are showing same , 
+// RELATED('Internet Sales'[Order Date]) // We cant use it as we are on one side of relationship (we are on the customer table(Dim table)) we use RELATEDTABLE
+//MAX(RELATEDTABLE('Internet Sales')) // The MAX function only accepts a column name or Scalar value as an argument.MAX Function gives single Value 
+//In MAXX: 
+//X Function does it is, It takes the table and works on one row  at a time and it performs the expression on every row of that table. and in result it gives single column in the table.
+MAXX(RELATEDTABLE('Internet Sales'), 'Internet Sales'[Order Date])
+
+
+How do we return the total Transactions for each customer?
+Go to Report and get the Total Transactions and Full name in table view
+
+
+Why do we use calc Column and measures?
+Should i use create column in model ?Where to use calc Measrues in Model or should i build more dynamic
+when should we use calculated columns and measure?
+If your use cases are for if its gonna be expresisions like profits, margins, total sales, total transactions because then use calc columns and measures beccause its gonna be more dynamic because its always gonna work with row context.
+When working with for total transactions filter with with each customer it works but if we filter by year or country or product.
+When you use aggregations we use always in measures its is dynamic.
+
+Create a Date table in power Query Editor. Using modeli
+
+
+
+optional paramters in DAX series by peterson?
+
+
+*** Calculated Measures ***
+Go to the Model View, select all the Columns in the Data Tab and create a column Folder name.
+Go to the Internet sales table and select all columns and in porperties Tab make folder name as Columns.
+
+
+
+Now create a new measures in Report View
+
+-- Total Transactions (Measure on Internet Sales)
+Total Transactions = COUNTROWS('Internet Sales')
+
+-- Total Sales
+Total Sales = SUM('Internet Sales'[Sales Amount]) 
+
+-- Total Cost
+Total Cost = SUM('Internet Sales'[Total Product Cost])
+
+-- Profit
+Profit = [Total Sales] - [Total Cost]
+
+-- Profit Margin
+Profit Margin = DIVIDE([Profit], [Total Sales])
+
+*** Working with CALCULATE ***
+
+// RETURN THE TOTAL SALES FOR ALL THE COUNTRIES
+
+Total Sales (All Countries) = 
+IF(
+    ISBLANK([Total Sales]),
+    BLANK(),
+    CALCULATE(
+        [Total Sales],
+        //ALL('Sales Territory'[Sales Territory Country]
+         REMOVEFILTERS('Sales Territory'[Sales Territory Country]
+         ) ) )
+
+    //Using ALL function Here we get the result by ignoring the filter based on the country for total sales
+    // will be using for percentage of sales 
+    // instead of using ALL function we can also use REMOVEFILTERS function it gives same reuslts
+    // removed NA by using IF CONDITION
+
+-- Total Sales (All Countries)
+Total Sales (All Countries) = 
+CALCULATE(
+    [Total Sales],
+    ALL('Sales Territory'[Sales Territory Country] ) ) 
+
+-- Total Sales (All Countries) 
+Total Sales (All Countries) = 
+CALCULATE(
+    [Total Sales],
+    REMOVEFILTERS('Sales Territory'[Sales Territory Country] ) ) 
+
+-- Remove blanks
+-- Total Sales (All Countries)
+Total Sales (All Countries) = 
+IF(
+    [Total Sales] = BLANK(),
+    BLANK(),
+    CALCULATE(
+        [Total Sales],
+        ALL('Sales Territory'[Sales Territory Country] ) ) )
+
+
+--Percent of Total
+Percent of Total Sales for all countries = 
+DIVIDE(
+    [Total Sales],
+    [Total Sales (All Countries)] )
+
+
+% GT vs % of total if u wanna see the difference add the filter for country 
+%GT gives only for the page incudes filters 
+%GT we can also use ALLSELECTED function.
+
+-- Total Sales (United States)
+Total Sales (United States) = 
+CALCULATE(
+    [Total Sales],
+    'Sales Territory'[Sales Territory Country] = "United States")
+
+
+CALCULATE (TOTAL SALES) measure with in this (sales territory country)  modifiled filter context 
+**Remove blanks
+-- Total Sales (United States)
+Total Sales (United States) = 
+IF(
+    ISBLANK([Total Sales]),
+    BLANK(),
+    CALCULATE(
+        [Total Sales],
+        'Sales Territory'[Sales Territory Country] = "United States"))
+
+-- Total Sales (US and Canada) 
+Total Sales (US and Canada) = 
+CALCULATE(
+    [Total Sales],
+    'Sales Territory'[Sales Territory Country] IN { "United States", "Canada" })
+
+**Optional Method** Sames results as above.
+
+-- Total Sales (US and Canada) 
+Total Sales (US and Canada) = 
+CALCULATE(
+    [Total Sales],
+    'Sales Territory'[Sales Territory Country] = "United States" || 
+	// The double pipe delimiter is an OR condition.
+    'Sales Territory'[Sales Territory Country] = "Canada" )
+
+-- Total Sales (2007)
+Total Sales (2007) = 
+CALCULATE(
+    [Total Sales],
+    'Date'[Year] = 2007)
+
+-- Total Sales (2008)
+Total Sales (2008) = 
+CALCULATE(
+    [Total Sales],
+    'Date'[Year] = 2008)
+
+*** Time Intelligence Calculations ***
+YTD Sales = From Jan 1st to current Date
+TOTALYTD(Expression, Dates, [FILTER],[YearEndDate])
+DATES --> date column from your date table
+
+YTD SALES is the cummulate total of the (Quarters or month) for that particular year.
+Total Sales is the total sales not cummulative.
+
+Does DAX has ability to do it by week over week?
+Its hard with the simple Time Intell Calc in  DAX, we should use the Custom Calendar like 554,445, You should set up with DATE table with certain flat columns, We use more filter function to calculate these. 
+
+
+to use the drill down we use the matrix view, quarters in Date column
+
+-- Year to Date Sales
+YTD Sales = 
+TOTALYTD(
+    [Total Sales],
+    'Date'[Date] )
+
+Create Fiscal Year that ends on every year June 30 th?
+Fiscal YTD Sales = 
+TOTALYTD(
+    [Total Sales],
+    'Date'[Date],
+    "06/30" )
+
+
+
+Create a YTD sales based on the Week days?
+YTD Sales(Week Days)=
+TOTALYTD(
+	[Total Sales], 'Date'[Date], 
+	'Date'[Date] IN {2,3,4,5,6}
+	)
+
+
+YTD Sales(Week Days)=
+TOTALYTD(
+	[Total Sales], 'Date'[Date], 
+	NOT('Date'[Date] IN {1,7})
+	)
+
+-- Prior Year Sales 
+Now i want to see how much is the last year sales for the same month/year of the current month.
+Prior Year Sales = 
+CALCULATE(
+    [Total Sales],
+    SAMEPERIODLASTYEAR(
+        'Date'[Date]  ) )
+
+
+SAMEPERIODLASTYEAR derived from DATEADD
+PREVIOUSPERIOD comes from PARALLELPERIOD(works differently)
+
+
+Prior Year YTD Sales = 
+CALCULATE(
+    [YTD Sales],
+    SAMEPERIODLASTYEAR('Date'[Date]))
+
+
+-- Prior Month Sales
+Prior Month Sales = 
+CALCULATE(
+    [Total Sales],
+    DATEADD(
+        'Date'[Date],
+        -1, MONTH ) )
+
+
+
+
+*** Semi Additive Measures ***
+
+
+
+Inventory Balance = 
+SUM('Product Inventory'[Units Balance]) result is wrong as it culumlates the unit balance each day.
+we want last date inventory units. 
+
+Closing Balance (Last Date) = 
+CALCULATE(
+    [Inventory Balance],
+    LASTDATE( 
+        'Date'[Date] ) ) 
+
+-- Closing Balance (Non Blank)
+Closing Balance (Non Blank) = 
+CALCULATE(
+    [Inventory Balance],
+    LASTNONBLANK( 
+        'Date'[Date],
+        [Inventory Balance] ) ) 
+Home work :
+Opening banalnce month , closing balance month, Opening banalnce year , closing balance year  and they do not handle automatic balance values. 
+
+we want to update the inventory level for this month 1st date by updating with the previous month last date?
+
+it goes to previous month and grab all days and give the last date and give the product inventory for the last date.
+
+Opening Balance Month = 
+OPENINGBALANCEMONTH(
+    [Product Inventory],
+    'Date'[Date])
+
+
+Opening banalnce month , closing balance month, Opening banalnce year , closing balance year  and they do not handle automatic balance values. 
+
+
+-- Opening Balance Month
+Opening Balance Month = 
+CALCULATE(
+    [Inventory Balance],
+    LASTNONBLANK( 
+        PARALLELPERIOD(
+            'Date'[Date],
+            -1,
+            MONTH),
+        [Inventory Balance] ) )
+
+
+*** Context Transition ***
+we created on customer table
+Last Order Date = MAXX(RELATEDTABLE('Internet Sales'), 'Internet Sales'[Order Date])   # calculate for all records
+
+-- Now Create a calculated Column on Customer Table
+MaxOrderDate = CALCULATE(MAX('Internet Sales'[Order Date]))  // it returns from internetsales table the max date for all records 
+
+Now create calc Measure: 
+MAxDateMeasure = MAX('Internet Sales'[Order Date]) 
+
+Use the above measure to create a calc column and see the diff
+MaxDateUsingMeasure = [MAxDateMeasure] 
+
+
