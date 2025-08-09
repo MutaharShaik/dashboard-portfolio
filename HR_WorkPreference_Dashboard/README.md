@@ -1,4 +1,4 @@
-# HR Work Preference Dashboard (Power BI)
+# HR Work Preference Dashboard  - Power BI
 
 This dashboard analyzes employee work preferences such as remote work, flexible hours, work-life balance, and other contributing factors that impact overall job satisfaction and retention.
 
@@ -10,8 +10,18 @@ This Power BI dashboard offers an interactive exploration of:
 - Demographic breakdowns of work style preferences
 - Trends in work satisfaction and organizational policies
 
-HR_WorkPreference_Dashboard/images/Presence Insights-02.png
-HR_WorkPreference_Dashboard/images/Presence Insights.png
+## 🔍 Key Features
+- Attrition breakdown by age, department, and job role
+- Interactive filters
+- Trendline on monthly attrition rate
+
+## 📸 Preview
+ 
+| Dashboard Screenshots  | 
+|------------------------|
+| ![Summary](images/Presence Insights.png) |
+
+| ![Summary](images/Presence Insights-02.png) | 
 
 
 ## 🛠️ Tools Used
