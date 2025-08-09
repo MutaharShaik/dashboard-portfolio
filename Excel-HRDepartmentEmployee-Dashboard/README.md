@@ -27,12 +27,14 @@ The Excel dashboard includes:
 | Conditional Formatting   | Highlights attrition hotspots                     |
 | Charts                   | Bar, pie, and line charts for visual storytelling |
 
-## 📸 Sample Screenshots will be added shortly 
+## 📸 Screenshots 
 
 | Dashboard Summary | 
 |-------------------|
-| ![Summary](Images/dashboard-01.png) | 
+| ![Summary](Images/dashboard-01.png) |
+
 | ![Summary](Images/dashboard-02.png) |
+
 | ![Summary](Images/dashboard-03.png) |
 
 ## 🔍 Insights Discovered
