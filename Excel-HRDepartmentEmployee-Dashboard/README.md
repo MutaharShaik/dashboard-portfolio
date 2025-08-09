@@ -29,9 +29,10 @@ The Excel dashboard includes:
 
 ## 📸 Sample Screenshots will be added shortly 
 
-| Dashboard Summary | Gender Split |
-|-------------------|--------------|
-| ![Summary](screenshots/summary_view.png) | ![Gender Split](screenshots/gender_split.png) |
+| Dashboard Summary | 
+|-------------------|
+| ![Summary](images/dashboard-01.png) | ![Summary](images/dashboard-02.png)|
+![Summary](images/dashboard-03.png) |
 
 ## 🔍 Insights Discovered
 
