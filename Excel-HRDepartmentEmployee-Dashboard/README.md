@@ -31,8 +31,9 @@ The Excel dashboard includes:
 
 | Dashboard Summary | 
 |-------------------|
-| ![Summary](Images/dashboard-01.png) | ![Summary](Images/dashboard-02.png)|
-![Summary](Images/dashboard-03.png) |
+| ![Summary](Images/dashboard-01.png) | 
+| ![Summary](Images/dashboard-02.png) |
+| ![Summary](Images/dashboard-03.png) |
 
 ## 🔍 Insights Discovered
 
