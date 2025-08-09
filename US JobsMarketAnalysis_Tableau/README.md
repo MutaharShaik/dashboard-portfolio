@@ -21,7 +21,7 @@ The dashboard addresses the following key areas:
 ## 📸 Preview
 | Dashboard Screenshots  | 
 |------------------------|
-| ![Summary](images/dasboard-01.png) |
+| ![Summary](images/dashboard-01.png) |
 
 
 ## 🔍 Key Insights
