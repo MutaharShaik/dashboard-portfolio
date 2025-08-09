@@ -10,6 +10,10 @@ This Power BI dashboard offers an interactive exploration of:
 - Demographic breakdowns of work style preferences
 - Trends in work satisfaction and organizational policies
 
+HR_WorkPreference_Dashboard/images/Presence Insights-02.png
+HR_WorkPreference_Dashboard/images/Presence Insights.png
+
+
 ## 🛠️ Tools Used
 
 - **Power BI Desktop (.pbix)**
@@ -17,6 +21,7 @@ This Power BI dashboard offers an interactive exploration of:
 - **Power Query (M)** for data cleaning
 - **Excel** as the data source
 - **Slicers & Drill-Downs** for interactivity
+  
 
 
 ## Key Insights
