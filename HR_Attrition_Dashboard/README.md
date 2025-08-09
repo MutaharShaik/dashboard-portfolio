@@ -14,4 +14,10 @@ This dashboard analyzes employee attrition using HR and demographic data.
 - Trendline on monthly attrition rate
 
 ## 📸 Preview
-*(TO DO should Improvise adding Add screenshot here)*
+ 
+| Dashboard Screenshots  | 
+|------------------------|
+| ![Summary](images/dasboard-01(overview).png) |
+
+| ![Summary](images/Dashboard-02(Attrition).png) | 
+
