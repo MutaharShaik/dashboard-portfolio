@@ -18,39 +18,26 @@ The dashboard addresses the following key areas:
 - **Calculated fields** for KPIs like YoY growth, unemployment change, etc.
 - **Parameters and filters** for user-driven analysis
 
-## 📁 Files Included
+## 📸 Preview
+| Dashboard Screenshots  | 
+|------------------------|
+| ![Summary](images/dasboard-01.png) |
 
-- `US_Jobs.twbx` – Tableau workbook file with embedded data
-- `screenshots/` – Visual snapshots of key dashboards
-
-## 🖼️ Sample Visuals Will be added shortly
-
-| Job Distribution | Trend Line |
-|------------------|------------|
-| ![Jobs by State](screenshots/jobs_by_state.png) | ![Trends](screenshots/employment_trend.png) |
 
 ## 🔍 Key Insights
-
 - Tech, healthcare, and logistics are the fastest-growing sectors.
 - California, Texas, and New York have the highest job posting volumes.
 - A clear seasonal trend in job availability with dips during Q4.
 - Education and healthcare roles have been consistently stable throughout recent market changes.
 
 ## 📌 Business Use Case
-
 This dashboard is useful for:
 - HR analysts planning hiring pipelines
 - Job seekers identifying hotspots by industry and state
 - Policymakers tracking labor market shifts
 
-## 🧠 Author’s Role
-
-I performed the complete workflow including:
+## I performed the complete workflow including:
 - Data preparation and wrangling in Excel
 - Designing the visual layout and flow in Tableau
 - Creating calculated fields, filters, and dynamic parameters
-- Storytelling and dashboard interactivity for business presentation
-
----
-
-> 📎 Note: All data used in this project is anonymized or publicly sourced for demonstration purposes only.
+- Storytelling and dashboard interactivity for business presentation.
