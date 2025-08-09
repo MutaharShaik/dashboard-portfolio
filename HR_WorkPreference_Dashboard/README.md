@@ -19,9 +19,9 @@ This Power BI dashboard offers an interactive exploration of:
  
 | Dashboard Screenshots  | 
 |------------------------|
-| ![Summary](images/Presence Insights.png) |
+| ![Summary](images/PresenceInsights.png) |
 
-| ![Summary](images/Presence Insights-02.png) | 
+| ![Summary](images/PresenceInsights-02.png) | 
 
 
 ## 🛠️ Tools Used
