@@ -17,7 +17,7 @@ This dashboard analyzes employee attrition using HR and demographic data.
  
 | Dashboard Screenshots  | 
 |------------------------|
-| ![Summary](images/dashboard-01(overview).png) |
+| ![Summary](images/dasboard-01(overview).png) |
 
-| ![Summary](images/Dashboard-02(Attrition).png) |
+| ![Summary](images/Dashboard-02(Attrition).png) | 
 
